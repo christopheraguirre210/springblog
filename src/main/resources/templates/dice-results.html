@@ -5,6 +5,8 @@
     <title>Dice Results</title>
 </head>
 <body>
+<navbar th:replace="partials/navbar :: main-nav"></navbar>
+
 
 <h2>Results</h2>
 <p>The dice roll was <span th:text="${diceRoll}"></span></p>
@@ -19,6 +21,8 @@
     <li><a href="/roll-dice/5">5</a></li>
     <li><a href="/roll-dice/6">6</a></li>
 </ul>
+
+<footer th:replace="partials/footer :: footer"></footer>
 
 </body>
 </html>

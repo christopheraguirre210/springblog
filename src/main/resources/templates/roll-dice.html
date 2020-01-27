@@ -5,6 +5,9 @@
     <title>Roll-Dice</title>
 </head>
 <body>
+<navbar th:replace="partials/navbar :: main-nav"></navbar>
+
+
 <h2>Pick a number</h2>
 <ul>
     <li><a href="/roll-dice/1">1</a></li>
@@ -14,6 +17,8 @@
     <li><a href="/roll-dice/5">5</a></li>
     <li><a href="/roll-dice/6">6</a></li>
 </ul>
+
+<footer th:replace="partials/footer :: footer"></footer>
 
 </body>
 </html>
