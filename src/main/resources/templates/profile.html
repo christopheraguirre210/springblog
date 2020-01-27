@@ -5,7 +5,17 @@
     <title>Profile</title>
 </head>
 <body>
-<h1>Welcome, <span th:text="${username}"></span></h1>
+<navbar th:replace="partials/navbar :: main-nav"></navbar>
+<h1>Welcome, <span th:text="${username}">User</span></h1>
+<ul th:each="item : ${shoppingCart}">
+    <li th:text="${item}"></li>
+</ul>
 
+
+<div class="dashboard" th:if="${isAdmin}">
+Displaying your dashboard...
+</div>
+
+<footer th:replace="partials/footer :: footer"></footer>
 </body>
 </html>
