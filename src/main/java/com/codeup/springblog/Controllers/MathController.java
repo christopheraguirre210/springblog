@@ -8,28 +8,32 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class MathController {
 
-    @GetMapping("/add")
+
+    @GetMapping("/add/{x}/and/{y}")
     @ResponseBody
-    public String add(){
-        return "Give me numbers to add";
+    public String add(@PathVariable int x, @PathVariable int y){
+        return "the total of " + x +  " plus " + y + " is:" + (x + y);
+
     }
 
-    @GetMapping("/add/{first}")
+    @GetMapping("/subtract/{first}/from/{second}")
     @ResponseBody
-    public String first(@PathVariable int first){
-        return "number " + first;
+    public String subtract(@PathVariable int first, @PathVariable int second){
+        return "the total of " + first +  " minus " + second + " is:" + (second - first);
+
     }
 
-    @GetMapping("/add/{first}/and")
+    @GetMapping("/multiply/{first}/and/{second}")
     @ResponseBody
-    public String second(@PathVariable int first){
-        return "give me another number please";
+    public String multiply(@PathVariable int first, @PathVariable int second){
+        return "the total of " + first +  " times " + second + " is:" + (first * second);
+
     }
 
-    @GetMapping("/add/{first}/and/{second}")
+    @GetMapping("/divide/{first}/by/{second}")
     @ResponseBody
-    public String total(@PathVariable int first, @PathVariable int second){
-        return "the total of " + first +  " plus " + second + " is:" + (first + second);
+    public String divide(@PathVariable int first, @PathVariable int second){
+        return "the total of " + first +  " divided by " + second + " is:" + (second * first);
 
     }
 
