@@ -12,6 +12,7 @@ import java.util.List;
 @Controller
 public class PostController {
 
+    //Dependency Injection
     private PostRepository postDao;
 
     public PostController(PostRepository postDao){
@@ -22,21 +23,38 @@ public class PostController {
     //Show all post
     @GetMapping("/posts")
     public String index(Model model){
-        List<Post> posts = new ArrayList<>();
-        posts.add(new Post(1L, "post 1 title", "post 1 body"));
-        posts.add(new Post(2L, "post 2 title", "post 2 body"));
-        posts.add(new Post(3L, "post 3 title", "post 3 body"));
-        model.addAttribute("posts", posts);
+        model.addAttribute("posts", postDao.findAll());
         return "posts/index";
     }
 
     //Show a single post
     @GetMapping("/posts/{id}")
     public String viewPost(@PathVariable Long id, Model model){
-        Post post1 = new Post(4L, "Title 1", "Description 1");
+        Post post1 = new Post(id, "Title 1", "Description 1");
         model.addAttribute("post", post1);
         return "posts/show";
     }
+
+    //Edit individual posts
+    @GetMapping("/posts/{id}/edit")
+    public String editPostForm(@PathVariable long id, Model model){
+        model.addAttribute("post", postDao.getOne(id));
+        return "posts/edit";
+    }
+
+    @PostMapping("/posts/{id}/edit")
+    public String editPost(@PathVariable Long id, Post post){
+        postDao.save(post);
+        return "redirect:/posts";
+    }
+
+    //Delete individual posts
+    @PostMapping("/posts/{id}/delete")
+    public String deletePost(@PathVariable Long id){
+        postDao.deleteById(id);
+        return "redirect:/posts";
+    }
+
 
     //Create a post
     @GetMapping("/posts/create")

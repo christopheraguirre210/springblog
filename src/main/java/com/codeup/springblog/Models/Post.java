@@ -17,6 +17,8 @@ public class Post {
     @Column(nullable = false, columnDefinition = ("TEXT"))
     private String body;
 
+    public Post() {
+    }
 
     public Post(Long id, String title, String body) {
         this.id = id;
@@ -26,7 +28,6 @@ public class Post {
 
     public Post(String title, String description) {
         this.title = title;
-        this.body = body;
     }
 
 
