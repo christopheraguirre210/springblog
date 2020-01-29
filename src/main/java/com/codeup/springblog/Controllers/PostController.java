@@ -24,7 +24,7 @@ public class PostController {
     @GetMapping("/posts")
     public String index(Model model){
         model.addAttribute("posts", postDao.findAll());
-        return "posts/index";
+        return "/posts/index";
     }
 
     //Show a single post
@@ -32,14 +32,14 @@ public class PostController {
     public String viewPost(@PathVariable Long id, Model model){
         Post post1 = new Post(id, "Title 1", "Description 1");
         model.addAttribute("post", post1);
-        return "posts/show";
+        return "/posts/show";
     }
 
     //Edit individual posts
     @GetMapping("/posts/{id}/edit")
     public String editPostForm(@PathVariable long id, Model model){
         model.addAttribute("post", postDao.getOne(id));
-        return "posts/edit";
+        return "/posts/edit";
     }
 
     @PostMapping("/posts/{id}/edit")
@@ -59,7 +59,7 @@ public class PostController {
     //Create a post
     @GetMapping("/posts/create")
     public String createForm(){
-        return "posts/create";
+        return "/posts/create";
     }
 
     @PostMapping("/posts/create")
@@ -67,5 +67,11 @@ public class PostController {
         Post post = new Post(title, body);
         postDao.save(post);
         return "/posts/index";
+    }
+
+    @GetMapping("/posts/test")
+    public String returnTestView(Model model){
+        model.addAttribute("post", postDao.getOne(4L));
+        return "/posts/test";
     }
 }
