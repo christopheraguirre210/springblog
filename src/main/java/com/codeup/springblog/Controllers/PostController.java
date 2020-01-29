@@ -1,45 +1,53 @@
 package com.codeup.springblog.Controllers;
 
 import com.codeup.springblog.Models.Post;
+import com.codeup.springblog.repositories.PostRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class PostController {
 
-    @GetMapping("/posts")
-    public String postsIndex(Model model){
-        ArrayList<Post> postList = new ArrayList<>();
-        postList.add(new Post("title 2", "Description 2", 2));
-        postList.add(new Post("title 3", "Description 3", 3));
+    private PostRepository postDao;
 
-        model.addAttribute("post", postList);
+    public PostController(PostRepository postDao){
+        this.postDao = postDao;
+    }
+
+
+    //Show all post
+    @GetMapping("/posts")
+    public String index(Model model){
+        List<Post> posts = new ArrayList<>();
+        posts.add(new Post(1L, "post 1 title", "post 1 body"));
+        posts.add(new Post(2L, "post 2 title", "post 2 body"));
+        posts.add(new Post(3L, "post 3 title", "post 3 body"));
+        model.addAttribute("posts", posts);
         return "posts/index";
     }
 
+    //Show a single post
     @GetMapping("/posts/{id}")
-    public String singlePost(@PathVariable long id, Model model){
-        Post post1 = new Post("Title 1", "Description 1", id);
-        model.addAttribute("title", post1.getTitle());
-        model.addAttribute("body", post1.getBody());
+    public String viewPost(@PathVariable Long id, Model model){
+        Post post1 = new Post(4L, "Title 1", "Description 1");
+        model.addAttribute("post", post1);
         return "posts/show";
     }
 
+    //Create a post
     @GetMapping("/posts/create")
-    @ResponseBody
-    public String createPage(){
-        return "This is where you will be able to create a post";
+    public String createForm(){
+        return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    @ResponseBody
-    public String create(){
-        return "This is where you would actually create a new post";
+    public String createPost(@RequestParam String title, @RequestParam String body, Model model){
+        Post post = new Post(title, body);
+        postDao.save(post);
+        return "/posts/index";
     }
 }
