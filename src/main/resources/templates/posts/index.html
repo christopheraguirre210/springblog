@@ -5,10 +5,12 @@
     <title>Posts Index</title>
 </head>
 <body>
-<div th:each="post : ${posts}">
+<div th:each="post : ${showposts}">
     <h1 th:text="${post.title}"></h1>
     <p th:text="${post.body}"></p>
-
+</div>
+<div th:each="post : ${posts}">
+    <img th:src="${post.url}">
 </div>
 
 </body>

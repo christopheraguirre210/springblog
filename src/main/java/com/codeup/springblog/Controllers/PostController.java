@@ -74,4 +74,11 @@ public class PostController {
         model.addAttribute("posts", postDao.findAll());
         return "/posts/test";
     }
+
+    @GetMapping("posts/blog/{id}")
+    public String blogTestView(@PathVariable long id, Model model){
+        model.addAttribute("showposts", postDao.getOne(id));
+        model.addAttribute( "posts", postDao.getOne(id).getPostImages());
+        return "/posts/index";
+    }
 }

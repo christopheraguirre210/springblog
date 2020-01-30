@@ -2,6 +2,7 @@ package com.codeup.springblog.Models;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -21,7 +22,7 @@ public class Post {
     private PostDetails postDetails;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private PostImage postImage;
+    private List<PostImage> postImages;
 
     public Post() {
     }
@@ -67,6 +68,14 @@ public class Post {
 
     public void setPostDetails(PostDetails postDetails){
         this.postDetails = postDetails;
+    }
+
+    public List<PostImage> getPostImages() {
+        return postImages;
+    }
+
+    public void setPostImages(List<PostImage> postImages) {
+        this.postImages = postImages;
     }
 
     @Override
