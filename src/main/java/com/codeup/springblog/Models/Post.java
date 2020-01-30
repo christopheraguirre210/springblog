@@ -20,6 +20,9 @@ public class Post {
     @OneToOne(mappedBy = "post")
     private PostDetails postDetails;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private PostImage postImage;
+
     public Post() {
     }
 

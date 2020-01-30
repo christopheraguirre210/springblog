@@ -12,14 +12,18 @@ insert into posts (title, body) values
 ('Post 4', 'This is the test ad 4 description'),
 ('Post 5', 'This is the test ad 5 description');
 
-insert into post_details(history_of_post, is_awesome, topic_description, post_id)
-values ('post history test 1', true, 'This is test description 1', 1),
-('post history test 1', true, 'This is test description 2', 2),
-('post history test 1', true, 'This is test description 3', 3),
-('post history test 1', true, 'This is test description 4', 4),
-('post history test 1', true, 'This is test description 5', 5);
+insert into post_details(is_awesome,history_of_post, topic_description, post_id) values
+(true,'post history test 1', 'This is test description 1', 1),
+(true,'post history test 2', 'This is test description 2', 2),
+(true,'post history test 3', 'This is test description 3', 3),
+(true,'post history test 4', 'This is test description 4', 4),
+(true,'post history test 5', 'This is test description 5', 5);
 
 select * from posts;
+select * from post_details;
+
+describe posts;
+describe post_details;
 
 
 

@@ -71,7 +71,7 @@ public class PostController {
 
     @GetMapping("/posts/test")
     public String returnTestView(Model model){
-        model.addAttribute("post", postDao.getOne(4L));
+        model.addAttribute("posts", postDao.findAll());
         return "/posts/test";
     }
 }

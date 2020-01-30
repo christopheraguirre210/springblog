@@ -6,8 +6,15 @@
 </head>
 <body>
 
-<h1 th:text="${post.title}"></h1>
-<h3 th:text="${post.postDetails.topicDescription}"></h3>
+<!--<h1 th:text="${post.title}"></h1>-->
+<!--<h3 th:text="${post.postDetails.historyOfPost}"></h3>-->
+
+<div th:each="post: ${posts}">
+    <h2 th:text="${post.title}"></h2>
+    <p>History of Post:
+        <span th:text="${post.postDetails.historyOfPost}"></span>
+    </p>
+</div>
 
 </body>
 </html>
