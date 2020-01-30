@@ -15,6 +15,7 @@ package com.codeup.springblog.Models;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "post_details")
 public class PostDetails {
 
     @Id
