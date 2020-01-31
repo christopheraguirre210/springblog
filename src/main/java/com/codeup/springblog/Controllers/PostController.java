@@ -1,7 +1,9 @@
 package com.codeup.springblog.Controllers;
 
 import com.codeup.springblog.Models.Post;
+import com.codeup.springblog.Models.User;
 import com.codeup.springblog.repositories.PostRepository;
+import com.codeup.springblog.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +16,15 @@ public class PostController {
 
     //Dependency Injection
     private PostRepository postDao;
+    private UserRepository userDao;
 
-    public PostController(PostRepository postDao){
+    public PostController(PostRepository postDao, UserRepository userDao){
         this.postDao = postDao;
+        this.userDao = userDao;
     }
+
+
+
 
 
     //Show all post
@@ -30,8 +37,7 @@ public class PostController {
     //Show a single post
     @GetMapping("/posts/{id}")
     public String viewPost(@PathVariable Long id, Model model){
-        Post post1 = new Post(id, "Title 1", "Description 1");
-        model.addAttribute("post", post1);
+        model.addAttribute("post", postDao.getOne(id));
         return "/posts/show";
     }
 
@@ -43,7 +49,8 @@ public class PostController {
     }
 
     @PostMapping("/posts/{id}/edit")
-    public String editPost(@PathVariable Long id, Post post){
+    public String editPost(@ModelAttribute Post post, @PathVariable Long id){
+        User user = userDao.getOne(id);
         postDao.save(post);
         return "redirect:/posts";
     }
@@ -58,15 +65,17 @@ public class PostController {
 
     //Create a post
     @GetMapping("/posts/create")
-    public String createForm(){
+    public String createForm(Model model){
+        model.addAttribute("post", new Post());
         return "/posts/create";
     }
 
     @PostMapping("/posts/create")
-    public String createPost(@RequestParam String title, @RequestParam String body, Model model){
-        Post post = new Post(title, body);
+    public String createPost(@ModelAttribute Post post){
+        User user = userDao.getOne(1L);
+        post.setUser(user);
         postDao.save(post);
-        return "/posts/index";
+        return "redirect:/posts/";
     }
 
     @GetMapping("/posts/test")

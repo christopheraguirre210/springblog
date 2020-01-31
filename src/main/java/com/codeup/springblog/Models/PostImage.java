@@ -34,13 +34,13 @@ public class PostImage {
     @JoinColumn (name = "post_id")
     private Post post;
 
+    public PostImage() {
+    }
+
     public PostImage(String image_title, String url, Post post) {
         this.image_title = image_title;
         this.url = url;
         this.post = post;
-    }
-
-    public PostImage() {
     }
 
     public long getId() {
