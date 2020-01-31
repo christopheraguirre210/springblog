@@ -2,6 +2,7 @@ package com.codeup.springblog.Controllers;
 
 import com.codeup.springblog.Models.Post;
 import com.codeup.springblog.Models.User;
+import com.codeup.springblog.Services.EmailService;
 import com.codeup.springblog.repositories.PostRepository;
 import com.codeup.springblog.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,12 @@ public class PostController {
     //Dependency Injection
     private PostRepository postDao;
     private UserRepository userDao;
+    private EmailService emailService;
 
-    public PostController(PostRepository postDao, UserRepository userDao){
+    public PostController(PostRepository postDao, UserRepository userDao, EmailService emailService){
         this.postDao = postDao;
         this.userDao = userDao;
+        this.emailService = emailService;
     }
 
 
@@ -74,6 +77,7 @@ public class PostController {
     public String createPost(@ModelAttribute Post post){
         User user = userDao.getOne(1L);
         post.setUser(user);
+        emailService.prepareAndSend(post, "This is a Test Subject", "This is a test body");
         postDao.save(post);
         return "redirect:/posts/";
     }
