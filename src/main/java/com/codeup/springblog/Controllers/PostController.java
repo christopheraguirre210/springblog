@@ -77,7 +77,7 @@ public class PostController {
     public String createPost(@ModelAttribute Post post){
         User user = userDao.getOne(1L);
         post.setUser(user);
-        emailService.prepareAndSend(post, "This is a Test Subject", "This is a test body");
+        emailService.prepareAndSend(post, post.getTitle(), post.getBody());
         postDao.save(post);
         return "redirect:/posts/";
     }
