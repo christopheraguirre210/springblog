@@ -11,6 +11,11 @@
         <li>About</li>
         <li>Portfolio</li>
         <li>Contact</li>
+        <li>
+            <form th:action="@{/logout}" th:method="post">
+                <button class="btn-link btn" style="margin-top: 8px">Logout</button>
+            </form>
+        </li>
     </ul>
 </navbar>
 
