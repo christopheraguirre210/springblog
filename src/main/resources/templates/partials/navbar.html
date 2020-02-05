@@ -1,23 +1,50 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Navbar</title>
 </head>
 <body>
-<navbar th:fragment="main-nav">
-    <ul>
-        <li>Home</li>
-        <li>About</li>
-        <li>Portfolio</li>
-        <li>Contact</li>
-        <li>
-            <form th:action="@{/logout}" th:method="post">
-                <button class="btn-link btn" style="margin-top: 8px">Logout</button>
-            </form>
-        </li>
-    </ul>
-</navbar>
-
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" th:href="@{/}">Spring Blog</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/posts}">Posts</a>
+            </li>
+            <li class="nav-item mr-auto">
+                <a class="nav-link" th:href="@{/posts/create}">Create Post</a>
+            </li>
+            <!-- for ads -->
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/ads}">Ads</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/ads/create}">Create Ad</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <th:block sec:authorize="!isAuthenticated()">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/login}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/sign-up}">Sign up</a>
+                </li>
+            </th:block>
+            <th:block sec:authorize="isAuthenticated()">
+                <!-- LOGOUT LIST ITEM -->
+                <li class="nav-item d-flex align-items-center mx-2">
+                    <form class="d-flex align-items-center" th:action="@{/logout}" th:method="post">
+                        <button style="border:none !important" class="btn-link btn p-0">Logout</button>
+                    </form>
+                </li>
+            </th:block>
+        </ul>
+    </div>
+</nav>
 </body>
 </html>

@@ -5,6 +5,7 @@ import com.codeup.springblog.Models.User;
 import com.codeup.springblog.Services.EmailService;
 import com.codeup.springblog.repositories.PostRepository;
 import com.codeup.springblog.repositories.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +55,7 @@ public class PostController {
     @PostMapping("/posts/{id}/edit")
     public String editPost(@ModelAttribute Post post, @PathVariable Long id){
         User user = userDao.getOne(id);
+        post.setUser(user);
         postDao.save(post);
         return "redirect:/posts";
     }
@@ -68,30 +70,19 @@ public class PostController {
 
     //Create a post
     @GetMapping("/posts/create")
-    public String createForm(Model model){
+    public String createPostForm(Model model){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(loggedInUser.getUsername());
         model.addAttribute("post", new Post());
-        return "/posts/create";
+        return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    public String createPost(@ModelAttribute Post post){
+    public String createForm(@ModelAttribute Post post){
         User user = userDao.getOne(1L);
         post.setUser(user);
-        emailService.prepareAndSend(post, post.getTitle(), post.getBody());
         postDao.save(post);
-        return "redirect:/posts/";
+        return "redirect:/posts";
     }
 
-    @GetMapping("/posts/test")
-    public String returnTestView(Model model){
-        model.addAttribute("posts", postDao.findAll());
-        return "/posts/test";
-    }
-
-    @GetMapping("posts/blog/{id}")
-    public String blogTestView(@PathVariable long id, Model model){
-        model.addAttribute("showposts", postDao.getOne(id));
-        model.addAttribute( "posts", postDao.getOne(id).getPostImages());
-        return "/posts/index";
-    }
 }

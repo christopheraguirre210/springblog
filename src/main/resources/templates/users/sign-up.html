@@ -19,12 +19,5 @@
 
     <input value="Sign me up!" type="submit" />
 </form>
-<div sec:authorize="isAuthenticated()">
-    This content is only shown to authenticated users.
-
-    User ID: <span th:text="${#authentication.principal.id}"></span>
-    Username: <span th:text="${#authentication.principal.username}"></span>
-    Email: <span th:text="${#authentication.principal.email}"/>
-</div>
 </body>
 </html>
