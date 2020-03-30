@@ -14,7 +14,7 @@ public class DeimosDDayController {
 
     public String DevDay(@PathVariable String days, Model model){
         model.addAttribute("days", days);
-        return "deimos";
+        return "/deimos";
     }
 
 }
