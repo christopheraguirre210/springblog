@@ -17,6 +17,12 @@ public class Post {
     @Column(nullable = false, columnDefinition = ("TEXT"))
     private String body;
 
+    @OneToOne(mappedBy = "post")
+    private PostDetails postDetails;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private PostImage postImage;
+
     public Post() {
     }
 
@@ -53,5 +59,23 @@ public class Post {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public PostDetails getPostDetails(){
+        return postDetails;
+    }
+
+    public void setPostDetails(PostDetails postDetails){
+        this.postDetails = postDetails;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                ", postDetails=" + postDetails +
+                '}';
     }
 }
